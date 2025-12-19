@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'LuckyMarkdownView'
-  s.version          = '0.2.3'
+  s.version          = '0.3.5'
   s.summary          = 'A short description of LuckyMarkdownView.'
 
 # This description is used to generate tags and improve search results.
