@@ -28,15 +28,18 @@ public class MarkdownWebView: WKWebView {
     public private(set) var configuation: WKWebViewConfiguration
     public private(set) var updateHeightHandler: UpdateContentHeightHandler
     var selectionHandler: SelectionHandler
+    var tapContentHandler: TapContentHandler
     
     
-    public init(configuation: WKWebViewConfiguration = .init(), updateHeightHandler: UpdateContentHeightHandler = .init(), selectionHandler: SelectionHandler = .init()) {
+    public init(configuation: WKWebViewConfiguration = .init(), updateHeightHandler: UpdateContentHeightHandler = .init(), selectionHandler: SelectionHandler = .init(), tapContentHandler: TapContentHandler = .init()) {
         
         self.configuation = configuation
         self.updateHeightHandler = updateHeightHandler
         self.selectionHandler = selectionHandler
+        self.tapContentHandler = tapContentHandler
         self.configuation.userContentController.addScriptHandler(handler: self.updateHeightHandler)
         self.configuation.userContentController.addScriptHandler(handler: self.selectionHandler)
+        self.configuation.userContentController.addScriptHandler(handler: self.tapContentHandler)
         super.init(frame: .zero, configuration: self.configuation)
         if let style = String.styledHtmlUrl {
             load(URLRequest(url: style))
@@ -51,6 +54,7 @@ public class MarkdownWebView: WKWebView {
             }
             weakself.funcForSelect(text, rect)
         }
+        self.tapContentHandler.funcForTapContent = funcForTapContent
     }
     
     required init?(coder: NSCoder) {
@@ -61,6 +65,7 @@ public class MarkdownWebView: WKWebView {
     public var selectable: Bool = false
     
     public var funcForSelect: (String, CGRect) -> Void = { _, _ in }
+    public var funcForTapContent: () -> Void = {}
     
 }
 

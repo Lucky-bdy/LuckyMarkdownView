@@ -112,6 +112,29 @@ public class UpdateContentHeightHandler: ScriptHandler {
 }
 
 
+public class TapContentHandler: ScriptHandler {
+    
+    public init() {
+        let script = """
+                document.addEventListener('mousedown', function () {
+                    window.webkit.messageHandlers.webTouched.postMessage("tap");
+                });
+            """
+        super.init(script: script, name: "webTouched")
+    }
+    
+    public var funcForTapContent: () -> Void = {}
+    
+    public override func didReceive(message: WKScriptMessage) {
+        guard message.name == name else {
+            return
+        }
+        funcForTapContent()
+    }
+}
+
+
+
 extension WKUserScript {
     
     public convenience init(markdown: String) {
