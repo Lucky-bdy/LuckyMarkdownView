@@ -116,7 +116,7 @@ public class TapContentHandler: ScriptHandler {
     
     public init() {
         let script = """
-                document.addEventListener('mousedown', function () {
+                document.addEventListener('click', function () {
                     window.webkit.messageHandlers.webTouched.postMessage("tap");
                 });
             """
